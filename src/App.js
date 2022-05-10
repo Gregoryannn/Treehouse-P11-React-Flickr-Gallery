@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
 import apiKey from './config.js';
 import axios from 'axios';
+import { BrowserRouter, Route } from 'react-router-dom';
 
 import SearchForm from './components/SearchForm';
 import Navbar from './components/Navbar';
 import Gallery from './components/Gallery';
+
+import Cat from './components/Cat';
+import Dog from './components/Dog';
+import Goat from './components/Goat';
 
 class App extends Component {
 
@@ -33,21 +38,27 @@ class App extends Component {
         this.setState({
             tag: searchTermObj.search
         });
-
         // UPDATE AND MAKE A NEW CALL TO THE API ENDPOINT
 
     }
 
     render() {
         return (
+           <BrowserRouter>
                     <div className="container">
 
                     <SearchForm searchTags={this.searchTags} />
                     <Navbar />
-                    <Gallery photos={this.state.photos} tag={this.state.tag} />
 
-                </div>
-                );
-  }
+                    <Route path='/cat' component={Cat} />
+                    <Route path='/dog' component={Dog} />
+                    <Route path='/goat' component={Goat} />
+
+                    <Gallery photos={this.state.photos} tag={this.state.tag} /> 
+
+        </div>
+      </BrowserRouter>
+        );
+    }
 }
-                export default App;
+export default App;
