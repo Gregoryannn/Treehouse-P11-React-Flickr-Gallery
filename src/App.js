@@ -11,11 +11,16 @@ import NotFound from './components/NotFound';
 
 class App extends Component {
 
-    state = {
-        photos: [],
-        tag: 'farm'
-    };
+    constructor() {
+        super();
 
+        this.state = {
+            photos: [],
+            tag: 'farm',
+            loading: true
+        };
+
+    }
 
     componentDidMount() {
         // this is asynchronous and returns a promise
@@ -24,8 +29,10 @@ class App extends Component {
         axios.get(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&media=photo&tags=${this.state.tag}&per_page=12&format=json&nojsoncallback=1`)
             .then(res => {
                 // console.log(res.data.photos.photo);
+                    // update loading state
                 this.setState({
-                    photos: res.data.photos.photo
+                    photos: res.data.photos.photo,
+                    loading: false
                 });
             });
 
@@ -39,7 +46,8 @@ class App extends Component {
                     // set the state to the new photos array
                     this.setState({
                         photos: res.data.photos.photo,
-                        tag: this.state.tag
+                        tag: this.state.tag,
+                        loading: false
                     });
                 });
         }
@@ -72,10 +80,11 @@ class App extends Component {
                     <Navbar addTag={this.addTag} />
                     { /* Add routes here  */}
                     <Switch>
-                        <Route exact path="/" render={() => <Gallery photos={this.state.photos} tag={this.state.tag} />} />
-                        <Route path="/search/:topic" render={() => <Gallery photos={this.state.photos} tag={this.state.tag} />} />
-                        <Route path='/search/:topic' render={() => <Gallery photos={this.state.photos} tag={this.state.tag} />} />
-                        <Route path='/search/:topic' render={() => <Gallery photos={this.state.photos} tag={this.state.tag} />} />
+                        <Route exact path="/" render={() => <Gallery photos={this.state.photos} tag={this.state.tag} loading={this.state.loading} />} />
+                        <Route path="/search/:topic" render={() => <Gallery photos={this.state.photos} tag={this.state.tag} loading={this.state.loading} />} />
+                        <Route path='/search/:topic' render={() => <Gallery photos={this.state.photos} tag={this.state.tag} loading={this.state.loading} />} />
+                        <Route path='/search/:topic' render={() => <Gallery photos={this.state.photos} tag={this.state.tag} loading={this.state.loading} />} />
+
                         <Route component={NotFound} />
                     </Switch>
                 </div>

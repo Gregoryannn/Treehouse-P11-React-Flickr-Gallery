@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Gallery = ({ photos, tag }) => {
+const Gallery = ({ photos, tag, loading }) => {
 
     // check to make sure there are photos
     const photoList = photos.length ? (
