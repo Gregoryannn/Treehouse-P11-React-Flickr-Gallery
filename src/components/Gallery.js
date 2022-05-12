@@ -1,37 +1,36 @@
 import React from 'react';
+import Photo from './Photo';
 
+// Create a Gallery container component
 const Gallery = ({ photos, tag, loading }) => {
 
     // check to make sure there are photos
     const photoList = photos.length ? (
-        // if true, map over the photoList array and return a list element
+        // if true, map over the photoList array to return a list element
+        // by passing props to the Photo component
         photos.map(photo => {
             return (
-                <li key={photo.id}>
-                    <img src={'https://farm' + photo.farm + '.staticflickr.com/' + photo.server + '/' + photo.id + '_' + photo.secret + '.jpg'} alt={photo.title + ' in ' + tag} />
-                </li>
+                 <Photo data={photo} key={photo.id} />
             );
         })
 
-    ) : ( // if false, return 'not found' element
+    ): ( // if false, return 'not found' list element
 
-        <li className="not-found">
-            <h3>No Results Found</h3>
-            <p>You search did not return any results. Please try again.</p>
-        </li>
-
+            <li className = "not-found">
+          <h3>No Results Found</h3>
+        <p>You search did not return any results. Please try again.</p>
+        </li >
+        
     );
 
-    return (
-        <div className="photo-container">
-            <h2>Results for {tag}</h2>
-            <ul>
-                {photoList}
-            </ul>
-        </div>
-    );
-
+return (
+    <div className="photo-container">
+        <h2>Results for {tag}</h2>
+        <ul>
+            {photoList}
+        </ul>
+    </div>
+);
+    
 }
-
-
 export default Gallery;
